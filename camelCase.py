@@ -9,20 +9,33 @@
 
 import re
 
-# Gather text from user
-user_input = input("Enter a sentence to have it adjusted to camelCase. All words with digits will be removed.: ")
+def camel_case(sentence):
+    if sentence != '':
+        # Split text into a list (found .split on stackoverflow)
+        user_input_list = sentence.split()
+        # check for numbers and remove them (regular expression found on stackoverflow)
+        user_input_list = [word for word in user_input_list if bool(re.search(r'\d', word)) == False]
 
-# Split text into a list (found .split on stackoverflow)
-user_input_list = user_input.split()
-# check for numbers and remove them (regular expression found on stackoverflow)
-user_input_list = [word for word in user_input_list if bool(re.search(r'\d', word)) == False]
+        if len(user_input_list) != 0:
+            # Remove the first word from the list and make it all lower case (Found .pop on stackoverflow)
+            camelCase = user_input_list.pop(0).lower()
 
-# Remove the first word from the list and make it all lower case (Found .pop on stackoverflow)
-camelCase = user_input_list.pop(0).lower()
+            # Capitalize each word then add them to the camelCase (.capitalize found on geeks for geeks)
+            for word in user_input_list:
+                word = word.capitalize()
+                camelCase = camelCase + word
 
-# Capitalize each word then add them to the camelCase (.capitalize found on geeks for geeks)
-for word in user_input_list:
-    word = word.capitalize()
-    camelCase = camelCase + word
+            return camelCase
+        else:
+            return ''
+    else:
+        return sentence
 
-print(camelCase)
+def main():
+    # Gather text from user
+    sentence = input("Enter a sentence to have it adjusted to camelCase. All words with digits will be removed.: ")
+    camelCased = camel_case(sentence)
+    print(camelCased)
+
+if __name__ == '__main__':
+    main()
